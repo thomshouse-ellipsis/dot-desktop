@@ -115,6 +115,8 @@ if [ $? -eq 255 ]; then
     done
 fi
 
+echo -e "\nInstalling ellipsis with the following packages: $PACKAGES...\n"
+
 curl -sL ellipsis.sh | PACKAGES="$PACKAGES" ELLIPSIS_PROTO='git' sh
 
 # Stop the SSH agent
