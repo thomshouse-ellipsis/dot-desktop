@@ -7,12 +7,13 @@ SSH_COMMENT="$(whoami)@$(hostname)"
 
 # Check for ellipsis.sh
 if [ -x "$HOME/.ellipsis/bin/ellipsis" ]; then
-    echo -e "\nExisting ellipsis install found. Just installing packages: $PACKAGES\n"
-    read -ra packarr -d '' <<<"$PACKAGES"
-    for p in "${packarr[@]}"; do
-        $HOME/.ellipsis/bin/ellipsis install "$p"
-    done
-    echo ""
+    echo -e "\nExisting ellipsis install found. Not installing.\n"
+    echo -e "If you wish to install these packages, you may do so by running:\n"
+    if [ "$(command -v ellipsis)" ]; then
+        echo -e "  ellipsis install $PACKAGES\n"
+    else
+        echo -e "  $HOME/.ellipsis/bin/ellipsis install $PACKAGES\n"
+    fi
     exit 0
 fi
 
