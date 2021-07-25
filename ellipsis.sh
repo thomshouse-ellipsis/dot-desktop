@@ -15,3 +15,11 @@ pkg.install() {
         fi
     done
 }
+
+pkg.link() {
+    : # Metapackage does not contain linkable files
+}
+
+pkg.unlink() {
+    : # Metapackage does not contain linkable files 
+}
