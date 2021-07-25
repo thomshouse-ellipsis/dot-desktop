@@ -5,6 +5,17 @@ PACKAGES='thomshouse-ellipsis/desktop'
 SSH_KEY=$HOME/.ssh/id_rsa
 SSH_COMMENT="$(whoami)@$(hostname)"
 
+# Check for ellipsis.sh
+if [ -x "$HOME/.ellipsis/bin/ellipsis" ]; then
+    echo -e "\nExisting ellipsis install found. Just installing packages: $PACKAGES\n"
+    read -ra packarr -d '' <<<"$PACKAGES"
+    for p in "${packarr[@]}"; do
+        $HOME/.ellipsis/bin/ellipsis install "$p"
+    done
+    echo ""
+    exit 0
+fi
+
 # Check SSH key pair
 if [ ! -f $SSH_KEY ] || [ ! -f $SSH_KEY.pub ]; then
     echo ""
