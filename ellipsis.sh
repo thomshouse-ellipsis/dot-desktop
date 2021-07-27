@@ -4,7 +4,7 @@
 packages=(
     thomshouse-ellipsis/zsh
 );
-    
+
 # Set of prerequisites to support WSL functionality
 wsl_prereqs=(
     thomshouse-ellipsis/wsl-utils
@@ -25,15 +25,22 @@ pkg.install() {
     # Loop through each set of packages and each package, installing or pulling latest
     for set in ${sets[*]}; do
         for package in ${set[*]}; do
-        echo "Checking for $(basename $package)...";
-        ellipsis.list_packages | grep "$ELLIPSIS_PACKAGES/$(basename $package)" 2>&1 > /dev/null;
-        if [ $? -ne 0 ]; then
-            $ELLIPSIS_PATH/bin/ellipsis install $package;
-        else
-            $ELLIPSIS_PATH/bin/ellipsis pull $(basename $package);
-        fi
+            echo "Checking for $(basename $package)...";
+            ellipsis.list_packages | grep "$ELLIPSIS_PACKAGES/$(basename $package)" 2>&1 > /dev/null;
+            if [ $? -ne 0 ]; then
+                $ELLIPSIS_PATH/bin/ellipsis install $package;
+            else
+                $ELLIPSIS_PATH/bin/ellipsis pull $(basename $package);
+            fi
         done
     done
+}
+
+pkg.init() {
+    # Add ellipsis bin to $PATH if it isn't there
+    if [ ! "$(command -v ellipsis)" ]; then
+        export PATH=$ELLIPSIS_PATH/bin:$PATH
+    fi
 }
 
 pkg.link() {
