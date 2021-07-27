@@ -1,11 +1,30 @@
 #!/usr/bin/env bash
 
+# Main list of packages for desktop. OS-agnostic.
 packages=(
     thomshouse-ellipsis/zsh
 );
     
+# Set of prerequisites to support WSL functionality
+wsl_prereqs=(
+    thomshouse-ellipsis/wsl-utils
+    thomshouse-ellipsis/chocolatey
+);
+
 pkg.install() {
-    for package in ${packages[*]}; do
+    # Determine which set of packages we'll install based on OS
+    case "$(uname -rs)" in
+        *WSL2)
+            sets=( wsl_prereqs packages )
+            ;;
+        *)
+            sets=( packages )
+            ;;
+    esac
+
+    # Loop through each set of packages and each package, installing or pulling latest
+    for set in ${sets[*]}; do
+        for package in ${set[*]}; do
         echo "Checking for $(basename $package)...";
         ellipsis.list_packages | grep "$ELLIPSIS_PACKAGES/$(basename $package)" 2>&1 > /dev/null;
         if [ $? -ne 0 ]; then
@@ -13,6 +32,7 @@ pkg.install() {
         else
             $ELLIPSIS_PATH/bin/ellipsis pull $(basename $package);
         fi
+        done
     done
 }
 
