@@ -12,7 +12,7 @@ wsl_prereqs=(
 );
 
 # Load the metapackage functions
-. "$PKG_PATH/src/meta.bash"
+test -n "$PKG_PATH" && . "$PKG_PATH/src/meta.bash"
 
 pkg.install() {
     meta.install_packages
