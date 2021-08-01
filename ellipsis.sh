@@ -21,7 +21,7 @@ pkg.install() {
 
 pkg.init() {
     # Add ellipsis bin to $PATH if it isn't there
-    if ! utils.cmd_exists ellipsis; then
+    if [ ! "$(command -v ellipsis)" ]; then
         export PATH=$ELLIPSIS_PATH/bin:$PATH
     fi
 }
