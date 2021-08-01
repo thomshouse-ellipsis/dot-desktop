@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 # Defaults
-PACKAGES='thomshouse-ellipsis/desktop'
+PACKAGES='desktop'
 SSH_KEY=$HOME/.ssh/id_rsa
 SSH_COMMENT="$(whoami)@$(hostname)"
+
+if [ -z "$ELLIPSIS_USER" ]; then
+    ELLIPSIS_USER='thomshouse-ellipsis'
+fi
 
 # Check for ellipsis.sh
 if [ -x "$HOME/.ellipsis/bin/ellipsis" ]; then
@@ -129,7 +133,7 @@ fi
 
 echo -e "\nInstalling ellipsis with the following packages: $PACKAGES...\n"
 
-curl -sL ellipsis.sh | PACKAGES="$PACKAGES" ELLIPSIS_PROTO='git' sh
+curl -sL ellipsis.sh | ELLIPSIS_USER="$ELLIPSIS_USER" ELLIPSIS_PROTO='git' PACKAGES="$PACKAGES" sh
 
 # Stop the SSH agent
 ssh-agent -k &>/dev/null
