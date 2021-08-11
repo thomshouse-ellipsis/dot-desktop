@@ -64,15 +64,15 @@ if [ $? -eq 255 ]; then
     # Try to be helpful and copy the public key to clipboard per OS
     if [ "$(command -v clip.exe)" ]; then
         # WSL
-        head -c -1 "$SSH_KEY.pub" | clip.exe
+        cat "$SSH_KEY.pub" | tr -d "\n" | clip.exe
         echo -e "For your convenience, your public key has been copied to your clipboard.\n"
     elif [ "$(command -v pbcopy)" ]; then
         # MacOS
-        head -c -1 "$SSH_KEY.pub" | pbcopy
+        cat "$SSH_KEY.pub" | tr -d "\n" | pbcopy
         echo -e "For your convenience, your public key has been copied to your clipboard.\n"
     elif [ "$(command -v xclip)" ]; then
         # Linux
-        head -c -1 "$SSH_KEY.pub" | xclip -selection c
+        cat "$SSH_KEY.pub" | tr -d "\n" | xclip -selection c
         echo -e "For your convenience, your public key has been copied to your clipboard.\n"
     elif [ "$(command -v edit)" ]; then
         # If clipboard isn't available, offer to open in the default editor
@@ -119,13 +119,13 @@ if [ $? -eq 255 ]; then
 
     # Pause to give time to upload the key
     read -n 1 -s -r -p "Please add your public key to your GitHub account, then press any key to continue..."
-    read -s -t 0.001 # Clear any extra keycodes (e.g. arrows)
+    read -s -t 0 # Clear any extra keycodes (e.g. arrows)
     echo ""
     # Retest key and loop until we have success
     ssh -i "$SSH_KEY" -T git@github.com 2>/dev/null
     while [ $? -eq 255 ]; do
         read -n 1 -s -r -p "Please add your public key to your GitHub account, then press any key to continue..."
-        read -s -t 0.001 # Clear any extra keycodes (e.g. arrows)
+        read -s -t 0 # Clear any extra keycodes (e.g. arrows)
         echo ""
         ssh -i "$SSH_KEY" -T git@github.com 2>/dev/null
     done
