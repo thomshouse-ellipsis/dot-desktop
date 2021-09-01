@@ -3,6 +3,7 @@
 # Main list of packages for desktop. OS-agnostic.
 packages=(
     thomshouse/zsh
+    thomshouse-ellipsis/docker
 );
 
 # Set of prerequisites to support WSL functionality
