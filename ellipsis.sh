@@ -17,6 +17,7 @@ test -n "$PKG_PATH" && . "$PKG_PATH/src/meta.bash"
 pkg.install() {
     meta.install_packages
     meta.check_init_autoload
+    pkg.init
 }
 
 pkg.init() {
