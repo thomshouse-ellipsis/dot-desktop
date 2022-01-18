@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# List of apt packages to install on any apt-based system
+apt_packages=(
+    zip
+    unzip
+);
+
 # Main list of packages for desktop. OS-agnostic.
 packages=(
     thomshouse-ellipsis/zsh
