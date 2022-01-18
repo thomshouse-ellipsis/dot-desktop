@@ -4,9 +4,18 @@ meta.install_packages() {
     # Determine which set of packages we'll install based on OS
     case "$(uname -rs)" in
         *WSL2)
+            apt_packages=("${apt_packages[@]}")
             packages=("${wsl_prereqs[@]}" "${packages[@]}" )
             ;;
+        *)
+            apt_packages=()
+            ;;
     esac
+
+    # Loop through APT packages and install
+    if [ ${#apt_packages[@]} -ne 0 ]; then
+        DEBIAN_FRONTEND=noninteractive sudo apt-get update -y && sudo apt-get install -y ${apt_packages[@]}
+    fi
 
     # Loop through each set of packages and each package, installing or pulling latest
     for package in ${packages[*]}; do
