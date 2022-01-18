@@ -2,6 +2,7 @@
 
 # List of apt packages to install on any apt-based system
 apt_packages=(
+    keychain
     zip
     unzip
 );
