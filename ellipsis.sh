@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Main list of packages for desktop. OS-agnostic.
+packages=(
+    thomshouse/zsh
+    thomshouse-ellipsis/docker
+);
+
 # List of apt packages to install on any apt-based system
 apt_packages=(
     keychain
@@ -7,13 +13,17 @@ apt_packages=(
     unzip
 );
 
-# Main list of packages for desktop. OS-agnostic.
-packages=(
-    thomshouse/zsh
-    thomshouse-ellipsis/docker
+# List of homebrew formulae to install on MacOS-based systems
+brew_packages=(
 );
 
-# Set of prerequisites to support WSL functionality
+# List of choco packages to install on Windows systems
+choco_packages(
+);
+
+# Set of platform-specific prerequisites to support each platform
+linux_prereqs=()
+macos_prereqs=()
 wsl_prereqs=(
     thomshouse-ellipsis/wsl-utils
     thomshouse-ellipsis/chocolatey

@@ -2,13 +2,24 @@
 
 meta.install_packages() {
     # Determine which set of packages we'll install based on OS
-    case "$(uname -rs)" in
-        *WSL2)
-            apt_packages=("${apt_packages[@]}")
+    case $(os.platform) in
+        wsl2)
             packages=("${wsl_prereqs[@]}" "${packages[@]}" )
+            brew_packages=()
             ;;
+        linux)
+            packages=("${linux_prereqs[@]}" "${packages[@]}" )
+            brew_packages=()
+            choco_packages=()
+            ;;
+        osx)
+            packages=("${macos_prereqs[@]}" "${packages[@]}" )
+            apt_packages=()
+            choco_packages=()
         *)
             apt_packages=()
+            brew_packages=()
+            choco_packages=()
             ;;
     esac
 
@@ -27,6 +38,16 @@ meta.install_packages() {
             $ELLIPSIS_PATH/bin/ellipsis pull $(basename $package);
         fi
     done
+
+    # Loop through each set of homebrew packages and install
+    if [ ${#brew_packages[@]} -ne 0 ]; then
+        brew install ${brew_packages[@]}
+    fi
+
+    # Loop through each set of choco packages and install
+    if [ ${#choco_packages[@]} -ne 0 ]; then
+        choco install ${choco_packages[@]}
+    fi
 }
 
 meta.check_init_autoload() {
