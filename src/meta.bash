@@ -16,6 +16,7 @@ meta.install_packages() {
             packages=("${macos_prereqs[@]}" "${packages[@]}" )
             apt_packages=()
             choco_packages=()
+            ;;
         *)
             apt_packages=()
             brew_packages=()
