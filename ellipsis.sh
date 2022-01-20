@@ -18,7 +18,7 @@ brew_packages=(
 );
 
 # List of choco packages to install on Windows systems
-choco_packages(
+choco_packages=(
 );
 
 # Set of platform-specific prerequisites to support each platform
