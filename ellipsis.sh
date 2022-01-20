@@ -33,4 +33,9 @@ pkg.init() {
     if [ ! "$(command -v ellipsis)" ]; then
         export PATH=$ELLIPSIS_PATH/bin:$PATH
     fi
+
+    # Initialize keychain if it's installed
+    if [[ "$(command -v keychain)" ]]; then
+        eval `keychain --eval --agents ssh id_rsa`
+    fi
 }
