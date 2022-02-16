@@ -6,10 +6,12 @@ meta.install_packages() {
         wsl2)
             packages=("${wsl_prereqs[@]}" "${packages[@]}" )
             brew_packages=()
+            cask_packages=()
             ;;
         linux)
             packages=("${linux_prereqs[@]}" "${packages[@]}" )
             brew_packages=()
+            cask_packages=()
             choco_packages=()
             ;;
         osx)
@@ -20,6 +22,7 @@ meta.install_packages() {
         *)
             apt_packages=()
             brew_packages=()
+            cask_packages=()
             choco_packages=()
             ;;
     esac
@@ -43,6 +46,9 @@ meta.install_packages() {
     # Loop through each set of homebrew packages and install
     if [ ${#brew_packages[@]} -ne 0 ]; then
         brew install ${brew_packages[@]}
+    fi
+    if [ ${#cask_packages[@]} -ne 0 ]; then
+        brew install --cask ${cask_packages[@]}
     fi
 
     # Loop through each set of choco packages and install

@@ -16,6 +16,8 @@ apt_packages=(
 # List of homebrew formulae to install on MacOS-based systems
 brew_packages=(
 );
+cask_packages=(
+);
 
 # List of choco packages to install on Windows systems
 choco_packages=(
