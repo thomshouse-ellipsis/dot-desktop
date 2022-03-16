@@ -1,0 +1,30 @@
+[alias]
+  alias = "!git --no-pager config --get-regexp \"^alias\""
+  staged = diff --staged
+  ff = merge --ff-only
+  ffon = "!git checkout $1 && git merge --ff-only HEAD@{1}"
+  pf = pull --ff-only
+  up = "!git remote update -p; git merge --ff-only @{u}"
+  pushu = "!GIT_DEFAULT_BRANCHNAME=origin && zsh -c \"git push -u \"${1-$GIT_DEFAULT_BRANCHNAME}\" `git symbolic-ref --short HEAD`\""
+  hide = update-index --assume-unchanged
+  unhide = update-index --no-assume-unchanged
+  hidden = "!git ls-files -v | grep ^h | cut -c 3-"
+  purge = "!git branch --merged master | grep -E \"(issue-|feature-|release-)\" | cat"
+  purge-confirm = "!git branch --merged master | grep -E \"(issue-|feature-|release-)\" | xargs -n 1 git branch -d"
+  purge-remote = "!git branch -r --merged master | grep -E \"(issue-|feature-|release-)\" | cat"
+  testing = "!bash -c \"comm -12 <(git branch -r --no-merged origin/master) <(git branch -r --merged origin/testing)\""
+  testing-local = "!bash -c \"comm -12 <(git branch -r --no-merged origin/master) <(git branch -r --merged testing)\""
+  tiny = log --pretty='format:%C(auto)%h  %C(auto,cyan)%<(12)%cr%Creset %C(auto,bold)%<(16)%cn%Creset %C(auto,dim)%<(50,trunc)%s %C(auto)%d'
+  tree = log --pretty='format:%C(auto)%h  %C(auto,cyan)%<(12)%cr%Creset %C(auto,bold)%<(16)%cn%Creset %C(auto,dim)%<(50,trunc)%s %C(auto)%d' --graph
+  treemail = log --pretty='format:%C(auto)%h  %C(auto,cyan)%<(12)%cr%Creset %C(auto,bold)%<(16)%ce%Creset %C(auto,dim)%<(50,trunc)%s %C(auto)%d' --graph
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim
+  filemode = true
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+[push]
+  default = simple

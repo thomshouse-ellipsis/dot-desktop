@@ -1,0 +1,9 @@
+# Dotfiles config goes in the include
+[include]
+        path = ~/.gitconfig.dotfiles
+[user]
+        name = AUTHORNAME
+        email = AUTHOREMAIL
+[credential]
+        helper = GIT_CREDENTIAL_HELPER
+
