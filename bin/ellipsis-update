@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if [ -z $ELLIPSIS_PATH ]; then
+    echo "Error: $ELLIPSIS_PATH not set. Cannot update."
+    exit 1;
+fi
+
+ELLIPSIS_BIN="$ELLIPSIS_PATH/bin"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
+
+source "$ELLIPSIS_SRC/init.bash"
+
+load ellipsis
+
+for package in $(ellipsis.list_packages); do
+    echo ""
+    ellipsis pull $package
+    ellipsis reinstall $package
+done

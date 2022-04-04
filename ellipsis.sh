@@ -33,7 +33,22 @@ wsl_prereqs=(
 test -n "$PKG_PATH" && . "$PKG_PATH/src/meta.bash"
 
 pkg.install() {
+    # Add ellipsis bin to $PATH if it isn't there
+    if [ ! "$(command -v ellipsis)" ]; then
+        export PATH=$ELLIPSIS_PATH/bin:$PATH
+    fi
+
+    # Install packages
     meta.install_packages
+
+    # Run setup scripts
+    for file in $PKG_PATH/setup/*[.]sh; do
+        if [ -f "$file" ]; then
+            PKG_PATH=$PKG_PATH sh "$file"
+        fi
+    done
+
+    # Run full initialization
     meta.check_init_autoload
     pkg.init
 }
@@ -43,4 +58,18 @@ pkg.init() {
     if [ ! "$(command -v ellipsis)" ]; then
         export PATH=$ELLIPSIS_PATH/bin:$PATH
     fi
+
+    # Add package bin to $PATH
+    export PATH=$PKG_PATH/bin:$PATH
+
+    # Run init scripts
+    for file in $PKG_PATH/init/*[.]zsh; do
+        if [ -f "$file" ]; then
+            . "$file"
+        fi
+    done
+}
+
+pkg.link() {
+    fs.link_files links;
 }
