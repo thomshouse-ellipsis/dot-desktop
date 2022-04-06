@@ -53,7 +53,7 @@ meta.install_packages() {
 
     # Loop through each set of choco packages and install
     if [ ${#choco_packages[@]} -ne 0 ]; then
-        choco install ${choco_packages[@]}
+        choco install ${choco_packages[@]} -y
     fi
 }
 
