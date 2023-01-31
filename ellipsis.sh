@@ -44,7 +44,7 @@ pkg.install() {
     # Run setup scripts
     for file in $(find "$PKG_PATH/setup" -maxdepth 1 -type f -name "*.sh"); do
         [ -e "$file" ] || continue
-        PKG_PATH=$PKG_PATH sh "$file"
+        PKG_PATH=$PKG_PATH bash "$file"
     done
 
     # Run full initialization
